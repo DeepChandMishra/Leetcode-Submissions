@@ -1,6 +1,6 @@
 class Solution {
 public:
-    long long  robber(vector<int>& nums)
+    long long robber(vector<int>& nums)
     {
         int n=nums.size();
         int prev2=0;
