@@ -1,24 +1,39 @@
 class Solution {
     public:
-      int solve(int row, int col, vector<vector<int>> &matrix,vector<vector<int>> &dp)
-    {
-        if(col<0 || col>matrix[0].size()-1) return 1E9;
-        if(row==0) return matrix[row][col];
-        if(dp[row][col] != -1) return dp[row][col];
-        int up = matrix[row][col] + solve(row-1,col,matrix,dp);
-        int leftDiagonal = matrix[row][col] + solve(row-1,col-1,matrix,dp);
-        int rightDiagonal = matrix[row][col] + solve(row-1,col+1,matrix,dp);
-        return dp[row][col] = min(up,min(leftDiagonal,rightDiagonal));
-    }
     int minFallingPathSum(vector<vector<int>>& matrix) {
-        int ans = INT_MAX;
-        int n = matrix.size();
-        int m = matrix[0].size();
-        vector<vector<int>> dp(n,vector<int>(m,-1));
-        for(int i=0;i<m;i++)
-        {
-            ans = min(ans,solve(n-1,i,matrix,dp));
-        }
-        return ans;
+    int mini=INT_MAX;
+    int n=matrix.size();
+    vector<vector<int>> dp(n,vector<int> (n,0));
+    
+    for(int i=0;i<n;i++){
+        dp[0][i]=matrix[0][i];
     }
+    
+    for(int row=1;row<n;row++){
+        for(int col=0;col<n;col++){
+            int leftupper=matrix[row][col];
+                if(col>0){
+                    leftupper+=dp[row-1][col-1];                        
+                }
+                else{
+                    leftupper+=1e8;
+                }
+            int upper=matrix[row][col]+dp[row-1][col];
+            int rightupper=matrix[row][col];
+            if(col+1<n){
+                rightupper+=dp[row-1][col+1];
+            }
+            else{
+                rightupper+=1e8;
+            }
+            dp[row][col]=min(leftupper,min(upper,rightupper));
+            
+        }
+    }
+    
+    for(int i=0;i<n;i++){
+        mini=min(mini,dp[n-1][i]);
+    }
+    return mini;
+}
 };
