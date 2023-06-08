@@ -56,14 +56,11 @@ class Solution
             Node* front=temp.first;
             int hd=temp.second;
             
-            if(mp.find(hd) == mp.end()){
-                mp[hd]=front->data;
-            }
-            if(front->right) q.push({front->right,hd+1});
-            if(front->left) q.push({front->left,hd+1});
-            
-        }
+            mp[hd]=front->data;
         
+            if(front->left) q.push({front->left,hd+1});
+            if(front->right) q.push({front->right,hd+1});
+        }
         for(auto i:mp){
             ans.push_back(i.second);
         }
