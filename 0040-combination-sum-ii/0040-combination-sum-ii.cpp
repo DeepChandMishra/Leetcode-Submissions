@@ -11,7 +11,6 @@ vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
         if(sum > t) return;
         if(sum == t){
            ans.push_back(temp);
-            return;
         } 
         for(int i= index;i<c.size();i++){
             
