@@ -2,22 +2,25 @@ class Solution {
     public:
 vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
     sort(candidates.begin(), candidates.end());
-    vector<vector<int>> res;
-    vector<int> cur;
-    helper(res, cur, candidates, target, 0, 0);
-    return res;
+    vector<vector<int>> ans;
+    vector<int> temp;
+    find(candidates, target,ans,temp, 0, 0);
+    return ans;
 }
-void helper(vector<vector<int>>& res, vector<int>& cur, const vector<int>& candidates, int target, int i, int pre){
-    if(target == 0){
-        res.push_back(cur);
-        return;
-    }
-    if(i == candidates.size() || target < 0) return;
-    helper(res, cur, candidates, target, i + 1, target);
-    if(i > 0 && candidates[i - 1] == candidates[i] && pre == target) return; 
-    cur.push_back(candidates[i]);
-    helper(res, cur, candidates, target - candidates[i], i + 1, target);
-    cur.pop_back();
-    
-}
+ void find(vector<int>& c,int t,vector<vector<int>> &ans,vector<int> &temp,int index,int sum){
+        if(sum > t) return;
+        if(sum == t){
+           ans.push_back(temp);
+            return;
+        } 
+        for(int i= index;i<c.size();i++){
+            
+            if(i != index && c[i-1] == c[i]) continue;
+            sum += c[i];
+            temp.push_back(c[i]);
+            find(c,t,ans,temp,i+1,sum);
+            sum -= c[i];
+            temp.pop_back();
+        }
+ }
 };
